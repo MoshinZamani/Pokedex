@@ -15,3 +15,9 @@ type Pokemon = {
     }
   ];
 };
+
+type Stat = {
+  base_stat: string;
+  effort: string;
+  stat: { name: string; url: string };
+};
