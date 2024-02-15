@@ -21,8 +21,3 @@ export async function GET() {
 
   return NextResponse.json(pokemons);
 }
-
-// export async function GET() {
-//   const res = await fetch("https://pokeapi.co/api/v2/pokemon/1");
-//   return Response.json(res);
-// }

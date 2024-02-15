@@ -5,6 +5,8 @@ import { FaSortDown, FaSort } from "react-icons/fa";
 
 type Props = {
   pokemons: Pokemon[];
+  query: string;
+  currentPage: number;
 };
 
 const total = (stats: Stat[]) => {
@@ -13,17 +15,22 @@ const total = (stats: Stat[]) => {
   return totalAmount;
 };
 
-export default function DisplayPokemon({ pokemons }: Props) {
+export default function DisplayPokemon({
+  pokemons,
+  query,
+  currentPage,
+}: Props) {
   return (
     <main className="display_main relative overflow-x-auto shadow-md sm:rounded-lg w-9/12 my-8">
       <table className="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col">
-              <div className="flex items-end justify-evenly">
+              <div className="flex items-end justify-evenly border-solid">
                 Id <FaSortUp />
               </div>
             </th>
+            <th></th>
 
             <th scope="col" className="px-6 py-3">
               Name
@@ -77,13 +84,11 @@ export default function DisplayPokemon({ pokemons }: Props) {
           {pokemons.map((pokemon) => {
             return (
               <tr
-                key={pokemon.id}
-                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                key={pokemon.name}
+                className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-sky-200"
               >
-                <td className="relative px-6 py-4">
-                  <Link className="mr-32" href={`/pokemons/${pokemon.id}`}>
-                    {pokemon.id}
-                  </Link>
+                <td className="px-6 ">{pokemon.id}</td>
+                <td className="relative px-6 py-8">
                   <Image
                     src={`/sprites/${pokemon.id}.svg`}
                     alt={pokemon.name}
@@ -92,7 +97,16 @@ export default function DisplayPokemon({ pokemons }: Props) {
                   />
                 </td>
 
-                <td className="px-6 py-4">{pokemon.name}</td>
+                <td className="px-6 w-0.5 font-bold text-left text-blue-900">
+                  <Link
+                    className="ml-5 hover:text-red-500 hover:underline"
+                    href={`/pokemons/${pokemon.id}`}
+                  >
+                    {pokemon.name.charAt(0).toUpperCase() +
+                      pokemon.name.slice(1)}
+                  </Link>
+                </td>
+
                 <td>
                   {pokemon.types.map((type) => (
                     <p>
@@ -108,9 +122,9 @@ export default function DisplayPokemon({ pokemons }: Props) {
                     </p>
                   ))}
                 </td>
-                <td>{total(pokemon.stats)}</td>
+                <td className="text-center">{total(pokemon.stats)}</td>
                 {pokemon.stats.map((stat) => (
-                  <td>{stat.base_stat}</td>
+                  <td className="text-center">{stat.base_stat}</td>
                 ))}
               </tr>
             );

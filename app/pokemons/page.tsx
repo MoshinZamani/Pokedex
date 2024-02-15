@@ -1,13 +1,44 @@
 import getAllPokemons from "@/lib/getAllPokemons";
 import DisplayPokemon from "../components/DisplayPokemon";
+import Pagination from "../components/Pagination";
+import Search from "../components/Search";
 
-export default async function Pokemons() {
+type Props = {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+};
+
+export default async function Pokemons({ searchParams }: Props) {
   const pokemonsData: Promise<Pokemon[]> = getAllPokemons();
   const pokemons = await pokemonsData;
 
+  const pageSize = 20;
+
+  const query = searchParams?.query || "";
+  let filteredPokemons = pokemons.filter((pokemon) =>
+    pokemon.name.startsWith(query.toLowerCase())
+  );
+
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = Math.ceil(filteredPokemons.length / 20);
+  if (filteredPokemons.length > 20) {
+    filteredPokemons = filteredPokemons.slice(
+      (currentPage - 1) * 20,
+      (currentPage - 1) * 20 + 19
+    );
+  }
+
   return (
-    <>
-      <DisplayPokemon pokemons={pokemons} />
-    </>
+    <div className="flex flex-col items-center w-full">
+      <Search />
+      <DisplayPokemon
+        pokemons={filteredPokemons}
+        query={query}
+        currentPage={currentPage}
+      />
+      <Pagination totalPages={totalPages} />
+    </div>
   );
 }

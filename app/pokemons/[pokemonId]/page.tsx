@@ -24,6 +24,8 @@ export async function generateStaticParams() {
   const pokemons = await pokemonsData;
 
   return pokemons.map((pokemon) => {
-    pokemonId: pokemon.id.toString();
+    return {
+      pokemonId: pokemon.id.toString(),
+    };
   });
 }
