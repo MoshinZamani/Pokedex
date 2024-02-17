@@ -16,6 +16,9 @@ export async function GET() {
       name: result.name,
       types: result.types,
       stats: result.stats,
+      height: result.height,
+      weight: result.weight,
+      abilities: result.abilities,
     })
   );
 

@@ -1,5 +1,9 @@
 "use client";
 
+type Props = {
+  stats: Stat[];
+};
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,59 +14,65 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import totalStat from "@/lib/totalStat";
 
-const statsName: string[] = [
-  "Total",
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+export const options = {
+  scales: {
+    y: {
+      ticks: {
+        crossAlign: "far",
+      },
+    },
+  },
+  indexAxis: "y" as const,
+  maintainAspectRatio: true,
+  elements: {
+    bar: {
+      borderWidth: 0,
+    },
+  },
+  barPercentage: 0.3,
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+    title: {
+      display: false,
+      text: "Stats Horizontal Bar Chart",
+    },
+  },
+};
+
+const labels = [
   "HP",
   "Attack",
   "Defense",
-  "Sp. Attack",
-  "Sp. Defense",
+  "SP. Attack",
+  "SP. Defense",
   "Speed",
 ];
 
-export default function BarChart({ pokemon }) {
-  let stats: number[] = pokemon.stats.map((stat) => Number(stat.base_stat));
-  stats = [Number(totalStat(pokemon.stats)), ...stats];
+export default function BarChart({ stats }: Props) {
+  const baseStats = stats.map((stat) => Number(stat.base_stat));
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    BarElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const options = {
-    indexAxis: "y" as const,
-    elements: {
-      bar: {
-        borderWidth: 2,
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "right" as const,
-      },
-      title: {
-        display: false,
-        text: "Chart.js Horizontal Bar Chart",
-      },
-    },
-  };
-  const test: string = "test";
   const data = {
-    test,
+    labels,
     datasets: [
       {
         label: "",
-        data: [12],
+        data: baseStats,
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],
   };
-
   return <Bar options={options} data={data} />;
 }
