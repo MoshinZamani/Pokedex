@@ -38,7 +38,7 @@ export default async function Pokemons({ searchParams }: Props) {
         query={query}
         currentPage={currentPage}
       />
-      <Pagination totalPages={totalPages} />
+      <Pagination totalPages={totalPages} currentPage={currentPage - 1} />
     </div>
   );
 }

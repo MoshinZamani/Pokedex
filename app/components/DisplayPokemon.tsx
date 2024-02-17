@@ -2,17 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaSortUp } from "react-icons/fa6";
 import { FaSortDown, FaSort } from "react-icons/fa";
+import totalStat from "@/lib/totalStat";
 
 type Props = {
   pokemons: Pokemon[];
   query: string;
   currentPage: number;
-};
-
-const total = (stats: Stat[]) => {
-  const sum = (a: number[]) => a.reduce((x, y) => x + y);
-  const totalAmount = sum(stats.map((stat: Stat) => Number(stat.base_stat)));
-  return totalAmount;
 };
 
 export default function DisplayPokemon({
@@ -87,7 +82,9 @@ export default function DisplayPokemon({
                 key={pokemon.name}
                 className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 hover:bg-sky-200"
               >
-                <td className="px-6 ">{pokemon.id}</td>
+                <td className="px-6 " key={pokemon.name}>
+                  {pokemon.id}
+                </td>
                 <td className="relative px-6 py-8">
                   <Image
                     src={`/sprites/${pokemon.id}.svg`}
@@ -109,7 +106,7 @@ export default function DisplayPokemon({
 
                 <td>
                   {pokemon.types.map((type) => (
-                    <p>
+                    <p key={type.type.name}>
                       {
                         <Image
                           src={`/types/${type.type.name}.png`}
@@ -122,9 +119,11 @@ export default function DisplayPokemon({
                     </p>
                   ))}
                 </td>
-                <td className="text-center">{total(pokemon.stats)}</td>
+                <td className="text-center">{totalStat(pokemon.stats)}</td>
                 {pokemon.stats.map((stat) => (
-                  <td className="text-center">{stat.base_stat}</td>
+                  <td className="text-center" key={stat.stat.name}>
+                    {stat.base_stat}
+                  </td>
                 ))}
               </tr>
             );
