@@ -2,6 +2,8 @@ import getAllPokemons from "@/lib/getAllPokemons";
 import DisplayPokemon from "../components/DisplayPokemon";
 import Pagination from "../components/Pagination";
 import Search from "../components/Search";
+import { Suspense } from "react";
+import { BarChartSkeleton } from "../components/Skeleton";
 
 type Props = {
   searchParams?: {
@@ -33,11 +35,13 @@ export default async function Pokemons({ searchParams }: Props) {
   return (
     <div className="flex flex-col items-center w-full">
       <Search />
-      <DisplayPokemon
-        pokemons={filteredPokemons}
-        query={query}
-        currentPage={currentPage}
-      />
+      <Suspense fallback={<BarChartSkeleton />}>
+        <DisplayPokemon
+          pokemons={filteredPokemons}
+          query={query}
+          currentPage={currentPage}
+        />
+      </Suspense>
       <Pagination totalPages={totalPages} currentPage={currentPage - 1} />
     </div>
   );
