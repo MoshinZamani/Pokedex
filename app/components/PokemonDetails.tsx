@@ -1,5 +1,5 @@
 type Props = {
-  pokemon: OriginalPokemon;
+  pokemon: Pokemon;
 };
 
 export default function PokemonDetails({ pokemon }: Props) {

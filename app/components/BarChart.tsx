@@ -4,6 +4,7 @@ type Props = {
   stats: Stat[];
 };
 
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,8 +13,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,
@@ -24,30 +25,25 @@ ChartJS.register(
   Legend
 );
 
-export const options = {
+export const options: ChartOptions<"bar"> = {
+  indexAxis: "y" as const,
+  responsive: true,
+  maintainAspectRatio: true,
+  plugins: {
+    legend: {
+      display: false,
+      position: "right" as const,
+    },
+    title: {
+      display: false,
+      text: "",
+    },
+  },
   scales: {
     y: {
       ticks: {
         crossAlign: "far",
       },
-    },
-  },
-  indexAxis: "y" as const,
-  maintainAspectRatio: true,
-  elements: {
-    bar: {
-      borderWidth: 0,
-    },
-  },
-  barPercentage: 0.3,
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    title: {
-      display: false,
-      text: "Stats Horizontal Bar Chart",
     },
   },
 };

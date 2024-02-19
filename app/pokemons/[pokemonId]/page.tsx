@@ -9,7 +9,7 @@ import { BarChartSkeleton } from "@/app/components/Skeleton";
 import { Metadata } from "next";
 
 export async function generateMetadata({ params: { pokemonId } }: Props) {
-  const pokemonData: Promise<OriginalPokemon> = getPokemon(pokemonId);
+  const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 
   return {
@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
-  const pokemonData: Promise<OriginalPokemon> = getPokemon(pokemonId);
+  const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 
   const content = (
