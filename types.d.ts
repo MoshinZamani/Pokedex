@@ -1,27 +1,3 @@
-// type Pokemon = {
-//   id: string;
-//   name: string;
-//   types: [
-//     {
-//       slot: string;
-//       type: { name: string; url: string };
-//     }
-//   ];
-//   stats: [
-//     {
-//       base_stat: string;
-//       effort: string;
-//       stat: { name: string; url: string };
-//     }
-//   ];
-// };
-
-type Stat = {
-  base_stat: string;
-  effort: string;
-  stat: { name: string; url: string };
-};
-
 type Pokemon = {
   abilities: Ability[];
   id: string;
@@ -50,4 +26,10 @@ type Ability = {
   };
   is_hidden: boolean;
   slot: number;
+};
+
+type Stat = {
+  base_stat: string;
+  effort: string;
+  stat: { name: string; url: string };
 };

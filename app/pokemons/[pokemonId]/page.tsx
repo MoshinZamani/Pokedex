@@ -6,7 +6,6 @@ import totalStat from "@/lib/totalStat";
 import { Suspense } from "react";
 import PokemonDetails from "@/app/components/PokemonDetails";
 import { BarChartSkeleton } from "@/app/components/Skeleton";
-import { Metadata } from "next";
 
 export async function generateMetadata({ params: { pokemonId } }: Props) {
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
@@ -27,13 +26,15 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
   const pokemon = await pokemonData;
 
   const content = (
-    <section className="flex w-4/5 items-center mt-4 flex-wrap">
-      <div className="flex justify-center relative p-8 w-full ">
+    <section className="flex items-center mt-4 sm:flex-col sm:w-full md:flex-row md:flex-wrap md:w-4/5">
+      <div className="flex justify-center p-8 w-full ">
         <Image
           src={`/sprites/${pokemonId}.svg`}
           alt={pokemon.name}
-          width={400}
-          height={400}
+          width="0"
+          height="0"
+          priority
+          className="w-1/2 h-auto"
         />
       </div>
       <div className="flex flex-col w-1/3 m-8">

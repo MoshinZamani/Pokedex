@@ -7,6 +7,8 @@ type Props = {
   searchParams?: {
     query?: string;
     page?: string;
+    column?: string;
+    order?: string;
   };
 };
 
@@ -29,15 +31,15 @@ export default async function Pokemons({ searchParams }: Props) {
       (currentPage - 1) * 20 + 19
     );
   }
+
   return (
     <div className="flex flex-col items-center w-full">
       <Search />
       <DisplayPokemon
         pokemons={filteredPokemons}
-        query={query}
-        currentPage={currentPage}
+        totalPages={totalPages}
+        currentPage={currentPage - 1}
       />
-      <Pagination totalPages={totalPages} currentPage={currentPage - 1} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import totalStat from "@/lib/totalStat";
 
 export async function GET() {
   const promises = [];
@@ -10,7 +11,7 @@ export async function GET() {
   const resolvedPromises = Promise.all(promises.map((promise) => promise));
   const results = await resolvedPromises;
   const pokemons: Pokemon[] = [];
-  results.map((result) =>
+  results.map((result) => {
     pokemons.push({
       id: result.id,
       name: result.name,
@@ -19,8 +20,8 @@ export async function GET() {
       height: result.height,
       weight: result.weight,
       abilities: result.abilities,
-    })
-  );
+    });
+  });
 
   return NextResponse.json(pokemons);
 }
