@@ -450,7 +450,7 @@ export default function DisplayPokemon({
           })}
         </tbody>
       </table>
-      <div>
+      <div className="flex justify-center pt-2">
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
