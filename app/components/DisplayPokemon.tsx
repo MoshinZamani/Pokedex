@@ -6,18 +6,12 @@ import { FaSortUp } from "react-icons/fa6";
 import { FaSortDown, FaSort } from "react-icons/fa";
 import totalStat from "@/lib/totalStat";
 import { useState } from "react";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Pagination from "./Pagination";
 
 type Props = {
   pokemons: Pokemon[];
   totalPages: number;
   currentPage: number;
-};
-
-type StatsSort = {
-  stat: number;
-  order: boolean;
 };
 
 export default function DisplayPokemon({
@@ -34,11 +28,6 @@ export default function DisplayPokemon({
   const [spAttackSort, setSpAttackSort] = useState<null | boolean>(null);
   const [speedSort, setSpeedSort] = useState<null | boolean>(null);
 
-  const { replace } = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
-
   const handleIdSort = (): void => {
     setNameSort(null);
     setHpSort(null);
@@ -52,16 +41,10 @@ export default function DisplayPokemon({
 
     if (idSort) {
       setIdSort((prev) => !prev);
-      idSortedPokemons = pokemons.sort((a, b) => {
-        if (a["id"] < b["id"]) return -1;
-        return 1;
-      });
+      idSortedPokemons = pokemons.sort((a, b) => (a["id"] < b["id"] ? -1 : 1));
     } else {
       setIdSort((prev) => !prev);
-      idSortedPokemons = pokemons.sort((a, b) => {
-        if (a["id"] > b["id"]) return -1;
-        return 1;
-      });
+      idSortedPokemons = pokemons.sort((a, b) => (a["id"] > b["id"] ? -1 : 1));
     }
     pokemons = idSortedPokemons;
   };
@@ -79,16 +62,14 @@ export default function DisplayPokemon({
 
     if (!nameSort) {
       setNameSort((prev) => !prev);
-      nameSortedPokemons = pokemons.sort((a, b) => {
-        if (a["name"] < b["name"]) return -1;
-        return 1;
-      });
+      nameSortedPokemons = pokemons.sort((a, b) =>
+        a["name"] < b["name"] ? -1 : 1
+      );
     } else {
       setNameSort((prev) => !prev);
-      nameSortedPokemons = pokemons.sort((a, b) => {
-        if (a["name"] > b["name"]) return -1;
-        return 1;
-      });
+      nameSortedPokemons = pokemons.sort((a, b) =>
+        a["name"] > b["name"] ? -1 : 1
+      );
     }
     pokemons = nameSortedPokemons;
   };
@@ -106,16 +87,14 @@ export default function DisplayPokemon({
 
     if (!hpSort) {
       setHpSort((prev) => !prev);
-      hpSortedPokemons = pokemons.sort((a, b) => {
-        if (a.stats[0].base_stat < b.stats[0].base_stat) return -1;
-        return 1;
-      });
+      hpSortedPokemons = pokemons.sort((a, b) =>
+        a.stats[0].base_stat < b.stats[0].base_stat ? -1 : 1
+      );
     } else {
       setHpSort((prev) => !prev);
-      hpSortedPokemons = pokemons.sort((a, b) => {
-        if (a.stats[0].base_stat > b.stats[0].base_stat) return -1;
-        return 1;
-      });
+      hpSortedPokemons = pokemons.sort((a, b) =>
+        a.stats[0].base_stat > b.stats[0].base_stat ? -1 : 1
+      );
     }
     pokemons = hpSortedPokemons;
   };
@@ -133,18 +112,16 @@ export default function DisplayPokemon({
 
     if (!attackSort) {
       setAttackSort((prev) => !prev);
-      attackSortedPokemons = pokemons.sort((a, b) => {
+      attackSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[1].base_stat < b.stats[1].base_stat) return -1;
-        return 1;
-      });
+        a.stats[1].base_stat < b.stats[1].base_stat ? -1 : 1
+      );
     } else {
       setAttackSort((prev) => !prev);
-      attackSortedPokemons = pokemons.sort((a, b) => {
+      attackSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[1].base_stat > b.stats[1].base_stat) return -1;
-        return 1;
-      });
+        a.stats[1].base_stat > b.stats[1].base_stat ? -1 : 1
+      );
     }
     pokemons = attackSortedPokemons;
   };
@@ -161,18 +138,16 @@ export default function DisplayPokemon({
 
     if (!defenseSort) {
       setDefenseSort((prev) => !prev);
-      defenseSortedPokemons = pokemons.sort((a, b) => {
+      defenseSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[2].base_stat < b.stats[2].base_stat) return -1;
-        return 1;
-      });
+        a.stats[2].base_stat < b.stats[2].base_stat ? -1 : 1
+      );
     } else {
       setDefenseSort((prev) => !prev);
-      defenseSortedPokemons = pokemons.sort((a, b) => {
+      defenseSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[2].base_stat > b.stats[2].base_stat) return -1;
-        return 1;
-      });
+        a.stats[2].base_stat > b.stats[2].base_stat ? -1 : 1
+      );
     }
     pokemons = defenseSortedPokemons;
   };
@@ -190,11 +165,10 @@ export default function DisplayPokemon({
 
     if (!spAttackSort) {
       setSpAttackSort((prev) => !prev);
-      spAttackSortedPokemons = pokemons.sort((a, b) => {
+      spAttackSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[3].base_stat < b.stats[3].base_stat) return -1;
-        return 1;
-      });
+        a.stats[3].base_stat < b.stats[3].base_stat ? -1 : 1
+      );
     } else {
       setSpAttackSort((prev) => !prev);
       spAttackSortedPokemons = pokemons.sort((a, b) => {
@@ -218,18 +192,16 @@ export default function DisplayPokemon({
 
     if (!spDefenseSort) {
       setSpDefenseSort((prev) => !prev);
-      spDefenseSortedPokemons = pokemons.sort((a, b) => {
+      spDefenseSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[4].base_stat < b.stats[4].base_stat) return -1;
-        return 1;
-      });
+        a.stats[4].base_stat < b.stats[4].base_stat ? -1 : 1
+      );
     } else {
       setSpDefenseSort((prev) => !prev);
-      spDefenseSortedPokemons = pokemons.sort((a, b) => {
+      spDefenseSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[4].base_stat > b.stats[4].base_stat) return -1;
-        return 1;
-      });
+        a.stats[4].base_stat > b.stats[4].base_stat ? -1 : 1
+      );
     }
     pokemons = spDefenseSortedPokemons;
   };
@@ -247,18 +219,16 @@ export default function DisplayPokemon({
 
     if (!speedSort) {
       setSpeedSort((prev) => !prev);
-      speedSortedPokemons = pokemons.sort((a, b) => {
+      speedSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[5].base_stat < b.stats[5].base_stat) return -1;
-        return 1;
-      });
+        a.stats[5].base_stat < b.stats[5].base_stat ? -1 : 1
+      );
     } else {
       setSpeedSort((prev) => !prev);
-      speedSortedPokemons = pokemons.sort((a, b) => {
+      speedSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        if (a.stats[5].base_stat > b.stats[5].base_stat) return -1;
-        return 1;
-      });
+        a.stats[5].base_stat > b.stats[5].base_stat ? -1 : 1
+      );
     }
     pokemons = speedSortedPokemons;
   };

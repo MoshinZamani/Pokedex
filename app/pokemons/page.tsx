@@ -1,6 +1,5 @@
 import getAllPokemons from "@/lib/getAllPokemons";
 import DisplayPokemon from "../components/DisplayPokemon";
-import Pagination from "../components/Pagination";
 import Search from "../components/Search";
 
 type Props = {

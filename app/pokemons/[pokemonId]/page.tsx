@@ -7,6 +7,10 @@ import { Suspense } from "react";
 import PokemonDetails from "@/app/components/PokemonDetails";
 import { BarChartSkeleton } from "@/app/components/Skeleton";
 
+type Props = {
+  params: { pokemonId: string };
+};
+
 export async function generateMetadata({ params: { pokemonId } }: Props) {
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
@@ -16,10 +20,6 @@ export async function generateMetadata({ params: { pokemonId } }: Props) {
     description: `Details of ${pokemon.name}`,
   };
 }
-
-type Props = {
-  params: { pokemonId: string };
-};
 
 export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
