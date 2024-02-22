@@ -113,13 +113,11 @@ export default function DisplayPokemon({
     if (!attackSort) {
       setAttackSort((prev) => !prev);
       attackSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[1].base_stat < b.stats[1].base_stat ? -1 : 1
       );
     } else {
       setAttackSort((prev) => !prev);
       attackSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[1].base_stat > b.stats[1].base_stat ? -1 : 1
       );
     }
@@ -139,13 +137,11 @@ export default function DisplayPokemon({
     if (!defenseSort) {
       setDefenseSort((prev) => !prev);
       defenseSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[2].base_stat < b.stats[2].base_stat ? -1 : 1
       );
     } else {
       setDefenseSort((prev) => !prev);
       defenseSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[2].base_stat > b.stats[2].base_stat ? -1 : 1
       );
     }
@@ -166,13 +162,11 @@ export default function DisplayPokemon({
     if (!spAttackSort) {
       setSpAttackSort((prev) => !prev);
       spAttackSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[3].base_stat < b.stats[3].base_stat ? -1 : 1
       );
     } else {
       setSpAttackSort((prev) => !prev);
       spAttackSortedPokemons = pokemons.sort((a, b) => {
-        // @ts-expect-error
         if (a.stats[3].base_stat > b.stats[3].base_stat) return -1;
         return 1;
       });
@@ -193,13 +187,11 @@ export default function DisplayPokemon({
     if (!spDefenseSort) {
       setSpDefenseSort((prev) => !prev);
       spDefenseSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[4].base_stat < b.stats[4].base_stat ? -1 : 1
       );
     } else {
       setSpDefenseSort((prev) => !prev);
       spDefenseSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[4].base_stat > b.stats[4].base_stat ? -1 : 1
       );
     }
@@ -221,12 +213,11 @@ export default function DisplayPokemon({
       setSpeedSort((prev) => !prev);
       speedSortedPokemons = pokemons.sort((a, b) =>
         // @ts-expect-error
-        a.stats[5].base_stat < b.stats[5].base_stat ? -1 : 1
+        a.stats[5].base_stat - b.stats[5].base_stat ? -1 : 1
       );
     } else {
       setSpeedSort((prev) => !prev);
       speedSortedPokemons = pokemons.sort((a, b) =>
-        // @ts-expect-error
         a.stats[5].base_stat > b.stats[5].base_stat ? -1 : 1
       );
     }
@@ -396,13 +387,13 @@ export default function DisplayPokemon({
 
                 <td>
                   {pokemon.types.map((type) => (
-                    <p key={type.type.name}>
+                    <p key={type.name}>
                       {
                         <Image
-                          src={`/types/${type.type.name}.png`}
+                          src={`/types/${type.name}.png`}
                           width={60}
                           height={30}
-                          alt={type.type.name}
+                          alt={type.name}
                           className="mb-1"
                         />
                       }
@@ -411,7 +402,7 @@ export default function DisplayPokemon({
                 </td>
                 <td className="text-center">{totalStat(pokemon.stats)}</td>
                 {pokemon.stats.map((stat) => (
-                  <td className="text-center" key={stat.stat.name}>
+                  <td className="text-center" key={stat.stat_name}>
                     {stat.base_stat}
                   </td>
                 ))}

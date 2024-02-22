@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import totalStat from "@/lib/totalStat";
+import { main, deleteAll } from "@/script/script";
 
 export async function GET() {
   const promises = [];
@@ -12,16 +12,33 @@ export async function GET() {
   const results = await resolvedPromises;
   const pokemons: Pokemon[] = [];
   results.map((result) => {
+    const abilities = result.abilities.map((ability: OriginalAbility) => {
+      return { name: ability.ability.name, is_hidden: ability.is_hidden };
+    });
+
+    const types = result.types.map((type: OriginalType) => {
+      return { name: type.type.name };
+    });
+
+    const stats = result.stats.map((stat: OriginalStat) => {
+      return { base_stat: stat.base_stat, stat_name: stat.stat.name };
+    });
+
     pokemons.push({
       id: result.id,
       name: result.name,
-      types: result.types,
-      stats: result.stats,
+      types,
+      stats,
       height: result.height,
       weight: result.weight,
-      abilities: result.abilities,
+      abilities,
     });
   });
 
-  return NextResponse.json(pokemons);
+  main(pokemons);
+  // deleteAll();
+
+  return NextResponse.json({
+    message: "All data fetched and inserted into sqlite db using prisma.",
+  });
 }

@@ -1,6 +1,6 @@
-import getAllPokemons from "@/lib/getAllPokemons";
 import DisplayPokemon from "../components/DisplayPokemon";
 import Search from "../components/Search";
+import { getAllPokemons } from "@/script/script";
 
 type Props = {
   searchParams?: {
@@ -12,9 +12,9 @@ type Props = {
 };
 
 export default async function Pokemons({ searchParams }: Props) {
+  // @ts-expect-error
   const pokemonsData: Promise<Pokemon[]> = getAllPokemons();
   const pokemons = await pokemonsData;
-
   const pageSize = 20;
 
   const query = searchParams?.query || "";
