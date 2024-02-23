@@ -2,16 +2,20 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaSortUp } from "react-icons/fa6";
-import { FaSortDown, FaSort } from "react-icons/fa";
+import { FaSortUp, FaSortDown, FaSort } from "react-icons/fa";
 import totalStat from "@/lib/totalStat";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Pagination from "./Pagination";
 
 type Props = {
   pokemons: Pokemon[];
   totalPages: number;
   currentPage: number;
+};
+
+type SortState = {
+  column: string | null;
+  direction: "desc" | "asc" | null;
 };
 
 export default function DisplayPokemon({
@@ -21,21 +25,14 @@ export default function DisplayPokemon({
 }: Props) {
   const [idSort, setIdSort] = useState<null | boolean>(false);
   const [nameSort, setNameSort] = useState<null | boolean>(null);
-  const [hpSort, setHpSort] = useState<null | boolean>(null);
-  const [attackSort, setAttackSort] = useState<null | boolean>(null);
-  const [defenseSort, setDefenseSort] = useState<null | boolean>(null);
-  const [spDefenseSort, setSpDefenseSort] = useState<null | boolean>(null);
-  const [spAttackSort, setSpAttackSort] = useState<null | boolean>(null);
-  const [speedSort, setSpeedSort] = useState<null | boolean>(null);
+  const [sortState, setSortState] = useState<SortState>({
+    column: null,
+    direction: null,
+  });
 
   const handleIdSort = (): void => {
     setNameSort(null);
-    setHpSort(null);
-    setAttackSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
+    setSortState({ column: null, direction: null });
 
     let idSortedPokemons: Pokemon[] = [];
 
@@ -51,12 +48,7 @@ export default function DisplayPokemon({
 
   const handleNameSort = (): void => {
     setIdSort(null);
-    setHpSort(null);
-    setAttackSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
+    setSortState({ column: null, direction: null });
 
     let nameSortedPokemons: Pokemon[] = [];
 
@@ -74,154 +66,40 @@ export default function DisplayPokemon({
     pokemons = nameSortedPokemons;
   };
 
-  const handleHpSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setAttackSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
-
-    let hpSortedPokemons: Pokemon[] = [];
-
-    if (!hpSort) {
-      setHpSort((prev) => !prev);
-      hpSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[0].base_stat < b.stats[0].base_stat ? -1 : 1
-      );
-    } else {
-      setHpSort((prev) => !prev);
-      hpSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[0].base_stat > b.stats[0].base_stat ? -1 : 1
-      );
-    }
-    pokemons = hpSortedPokemons;
+  const handleSort = (column: string): void => {
+    const isAsc = sortState.column === column && sortState.direction === "asc";
+    setSortState({
+      column,
+      direction: isAsc ? "desc" : "asc",
+    });
   };
 
-  const handleAttackSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setHpSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
-
-    let attackSortedPokemons: Pokemon[] = [];
-
-    if (!attackSort) {
-      setAttackSort((prev) => !prev);
-      attackSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[1].base_stat < b.stats[1].base_stat ? -1 : 1
-      );
-    } else {
-      setAttackSort((prev) => !prev);
-      attackSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[1].base_stat > b.stats[1].base_stat ? -1 : 1
-      );
-    }
-    pokemons = attackSortedPokemons;
-  };
-  const handleDefenseSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setAttackSort(null);
-    setHpSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
-
-    let defenseSortedPokemons: Pokemon[] = [];
-
-    if (!defenseSort) {
-      setDefenseSort((prev) => !prev);
-      defenseSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[2].base_stat < b.stats[2].base_stat ? -1 : 1
-      );
-    } else {
-      setDefenseSort((prev) => !prev);
-      defenseSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[2].base_stat > b.stats[2].base_stat ? -1 : 1
-      );
-    }
-    pokemons = defenseSortedPokemons;
-  };
-
-  const handleSpAttackSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setAttackSort(null);
-    setHpSort(null);
-    setDefenseSort(null);
-    setSpDefenseSort(null);
-    setSpeedSort(null);
-
-    let spAttackSortedPokemons: Pokemon[] = [];
-
-    if (!spAttackSort) {
-      setSpAttackSort((prev) => !prev);
-      spAttackSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[3].base_stat < b.stats[3].base_stat ? -1 : 1
-      );
-    } else {
-      setSpAttackSort((prev) => !prev);
-      spAttackSortedPokemons = pokemons.sort((a, b) => {
-        if (a.stats[3].base_stat > b.stats[3].base_stat) return -1;
-        return 1;
-      });
-    }
-    pokemons = spAttackSortedPokemons;
-  };
-  const handleSpDefenseSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setAttackSort(null);
-    setHpSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpeedSort(null);
-
-    let spDefenseSortedPokemons: Pokemon[] = [];
-
-    if (!spDefenseSort) {
-      setSpDefenseSort((prev) => !prev);
-      spDefenseSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[4].base_stat < b.stats[4].base_stat ? -1 : 1
-      );
-    } else {
-      setSpDefenseSort((prev) => !prev);
-      spDefenseSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[4].base_stat > b.stats[4].base_stat ? -1 : 1
-      );
-    }
-    pokemons = spDefenseSortedPokemons;
-  };
-
-  const handleSpeedSort = (): void => {
-    setIdSort(null);
-    setNameSort(null);
-    setAttackSort(null);
-    setHpSort(null);
-    setDefenseSort(null);
-    setSpAttackSort(null);
-    setSpDefenseSort(null);
-
-    let speedSortedPokemons: Pokemon[] = [];
-
-    if (!speedSort) {
-      setSpeedSort((prev) => !prev);
-      speedSortedPokemons = pokemons.sort((a, b) =>
+  const sortedPokemons = useMemo(() => {
+    if (!sortState.column) return pokemons;
+    const sorted = [...pokemons].sort((a, b) => {
+      if (sortState.column === "name") {
+        return sortState.direction === "asc"
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
         // @ts-expect-error
-        a.stats[5].base_stat - b.stats[5].base_stat ? -1 : 1
-      );
-    } else {
-      setSpeedSort((prev) => !prev);
-      speedSortedPokemons = pokemons.sort((a, b) =>
-        a.stats[5].base_stat > b.stats[5].base_stat ? -1 : 1
-      );
-    }
-    pokemons = speedSortedPokemons;
+      } else if (sortState.column in a.stats[0]) {
+        // Assuming all stats follow the same structure and are in the same order
+        const index = a.stats.findIndex(
+          (stat) => stat.stat_name === sortState.column
+        );
+        return sortState.direction === "asc"
+          ? Number(a.stats[index].base_stat) - Number(b.stats[index].base_stat)
+          : Number(b.stats[index].base_stat) - Number(a.stats[index].base_stat);
+      } else {
+        return sortState.direction === "asc" ? a.id - b.id : b.id - a.id;
+      }
+    });
+    return sorted;
+  }, [pokemons, sortState]);
+
+  const getSortIcon = (column: string) => {
+    if (sortState.column !== column) return <FaSort />;
+    return sortState.direction === "asc" ? <FaSortUp /> : <FaSortDown />;
   };
 
   return (
@@ -231,34 +109,22 @@ export default function DisplayPokemon({
           <tr>
             <th scope="col">
               <div
-                onClick={handleIdSort}
+                onClick={() => handleSort("id")}
                 className="flex items-end justify-evenly"
               >
                 Id
-                {idSort === null ? (
-                  <FaSort />
-                ) : !idSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("id")}
               </div>
             </th>
             <th></th>
 
             <th
-              onClick={handleNameSort}
+              onClick={() => handleSort("name")}
               scope="col"
               className="flex items-end justify-evenly px-6 py-3"
             >
               Name
-              {nameSort === null ? (
-                <FaSort />
-              ) : !nameSort ? (
-                <FaSortUp />
-              ) : (
-                <FaSortDown />
-              )}
+              {getSortIcon("name")}
             </th>
             <th>Type</th>
             <th>
@@ -266,98 +132,62 @@ export default function DisplayPokemon({
             </th>
             <th>
               <div
-                onClick={handleHpSort}
+                onClick={() => handleSort("hp")}
                 className="flex items-end justify-evenly"
               >
                 HP
-                {hpSort === null ? (
-                  <FaSort />
-                ) : !hpSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("hp")}
               </div>
             </th>
             <th>
               <div
-                onClick={handleAttackSort}
+                onClick={() => handleSort("attack")}
                 className="flex items-end justify-evenly"
               >
                 Attack
-                {attackSort === null ? (
-                  <FaSort />
-                ) : !attackSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("attack")}
               </div>
             </th>
             <th>
               <div
-                onClick={handleDefenseSort}
+                onClick={() => handleSort("defense")}
                 className="flex items-end justify-evenly"
               >
                 Defense
-                {defenseSort === null ? (
-                  <FaSort />
-                ) : !defenseSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("defense")}
               </div>
             </th>
             <th>
               <div
-                onClick={handleSpAttackSort}
+                onClick={() => handleSort("spattack")}
                 className="flex items-end justify-evenly"
               >
                 Sp. Attack
-                {spAttackSort === null ? (
-                  <FaSort />
-                ) : !spAttackSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("spattack")}
               </div>
             </th>
             <th>
               <div
-                onClick={handleSpDefenseSort}
+                onClick={() => handleSort("spdefense")}
                 className="flex items-end justify-evenly"
               >
                 Sp. Defense
-                {spDefenseSort === null ? (
-                  <FaSort />
-                ) : !spDefenseSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("spdefense")}
               </div>
             </th>
             <th>
               <div
-                onClick={handleSpeedSort}
+                onClick={() => handleSort("speed")}
                 className="flex items-end justify-evenly"
               >
                 Speed
-                {speedSort === null ? (
-                  <FaSort />
-                ) : !speedSort ? (
-                  <FaSortUp />
-                ) : (
-                  <FaSortDown />
-                )}
+                {getSortIcon("speed")}
               </div>
             </th>
           </tr>
         </thead>
         <tbody>
-          {pokemons.map((pokemon) => {
+          {sortedPokemons.map((pokemon) => {
             return (
               <tr
                 key={pokemon.name}
@@ -415,14 +245,7 @@ export default function DisplayPokemon({
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
-          setIdSort={setIdSort}
-          setNameSort={setNameSort}
-          setHpSort={setHpSort}
-          setAttackSort={setAttackSort}
-          setDefenseSort={setDefenseSort}
-          setSpAttackSort={setSpAttackSort}
-          setSpDefenseSort={setSpDefenseSort}
-          setSpeedSort={setSpeedSort}
+          setSortState={setSortState}
         />
       </div>
     </main>

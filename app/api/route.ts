@@ -25,7 +25,7 @@ export async function GET() {
     });
 
     pokemons.push({
-      id: result.id,
+      id: Number(result.id),
       name: result.name,
       types,
       stats,
@@ -35,7 +35,7 @@ export async function GET() {
     });
   });
 
-  main(pokemons);
+  // main(pokemons);
   // deleteAll();
 
   return NextResponse.json({
