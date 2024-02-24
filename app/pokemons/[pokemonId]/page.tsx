@@ -1,6 +1,6 @@
 import Image from "next/image";
-import getAllPokemons from "@/lib/getAllPokemons";
-import getPokemon from "@/lib/getPokemon";
+import { getAllPokemons, getPokemon } from "@/script/script";
+
 import BarChart from "@/app/components/BarChart";
 import totalStat from "@/lib/totalStat";
 import { Suspense } from "react";
@@ -8,10 +8,11 @@ import PokemonDetails from "@/app/components/PokemonDetails";
 import { BarChartSkeleton } from "@/app/components/Skeleton";
 
 type Props = {
-  params: { pokemonId: string };
+  params: { pokemonId: number };
 };
 
 export async function generateMetadata({ params: { pokemonId } }: Props) {
+  //@ts-expect-error
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 
@@ -22,6 +23,7 @@ export async function generateMetadata({ params: { pokemonId } }: Props) {
 }
 
 export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
+  //@ts-expect-error
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 
@@ -54,6 +56,7 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
 }
 
 export async function generateStaticParams() {
+  //@ts-expect-error
   const pokemonsData: Promise<Pokemon[]> = getAllPokemons();
   const pokemons = await pokemonsData;
 

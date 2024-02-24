@@ -74,15 +74,24 @@ export default function DisplayPokemon({
     });
   };
 
+  const statsName: string[] = [
+    "hp",
+    "attack",
+    "defense",
+    "special-attack",
+    "special-defense",
+    "speed",
+  ];
+
   const sortedPokemons = useMemo(() => {
     if (!sortState.column) return pokemons;
+    const column = sortState.column;
     const sorted = [...pokemons].sort((a, b) => {
       if (sortState.column === "name") {
         return sortState.direction === "asc"
           ? a.name.localeCompare(b.name)
           : b.name.localeCompare(a.name);
-        // @ts-expect-error
-      } else if (sortState.column in a.stats[0]) {
+      } else if (statsName.includes(column)) {
         // Assuming all stats follow the same structure and are in the same order
         const index = a.stats.findIndex(
           (stat) => stat.stat_name === sortState.column
@@ -159,20 +168,20 @@ export default function DisplayPokemon({
             </th>
             <th>
               <div
-                onClick={() => handleSort("spattack")}
+                onClick={() => handleSort("special-attack")}
                 className="flex items-end justify-evenly"
               >
                 Sp. Attack
-                {getSortIcon("spattack")}
+                {getSortIcon("special-attack")}
               </div>
             </th>
             <th>
               <div
-                onClick={() => handleSort("spdefense")}
+                onClick={() => handleSort("special-defense")}
                 className="flex items-end justify-evenly"
               >
                 Sp. Defense
-                {getSortIcon("spdefense")}
+                {getSortIcon("special-defense")}
               </div>
             </th>
             <th>

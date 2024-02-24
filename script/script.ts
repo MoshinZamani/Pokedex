@@ -13,11 +13,11 @@ export async function main(pokemons: Pokemon[]) {
         abilities: {
           create: pokemon.abilities,
         },
-        // @ts-expect-error
         types: {
           create: pokemon.types,
         },
         stats: {
+          // @ts-expect-error
           create: pokemon.stats,
         },
       },
@@ -38,7 +38,6 @@ export async function getAllPokemons() {
     const pokemons: Pokemon[] = await prisma.pokemon.findMany({
       include: {
         abilities: true, // Include related abilities for each Pokemon
-        // @ts-expect-error
         types: true,
         stats: true,
       },
@@ -49,13 +48,28 @@ export async function getAllPokemons() {
   }
 }
 
+export async function getPokemon(pokemonId: number) {
+  const pokemon = await prisma.pokemon.findUnique({
+    where: {
+      id: Number(pokemonId),
+    },
+    include: {
+      abilities: true,
+      types: true,
+      stats: true,
+    },
+  });
+  if (!pokemon) {
+    throw new Error(`Pokemon with ID ${pokemonId} not found.`);
+  }
+  return pokemon;
+}
+
 export async function deleteAll() {
   try {
     // Fetch all records from the Pokemon table
     await prisma.ability.deleteMany({});
-    // @ts-expect-error
     await prisma.type.deleteMany({});
-    // @ts-expect-error
     await prisma.stat.deleteMany({});
     await prisma.pokemon.deleteMany({});
   } catch (error) {

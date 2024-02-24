@@ -21,8 +21,8 @@ export default function PokemonDetails({ pokemon }: Props) {
         Abilities :
         <ul className="list-none">
           {pokemon.abilities.map((ability, idx) => (
-            <li key={ability.ability.name}>
-              {idx + 1}.&nbsp;{ability.ability.name}
+            <li key={ability.name}>
+              {idx + 1}.&nbsp;{ability.name}
               {ability.is_hidden && <span>&nbsp;(hidden ability)</span>}
             </li>
           ))}
