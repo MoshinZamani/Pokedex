@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaSortUp, FaSortDown, FaSort } from "react-icons/fa";
-import totalStat from "@/lib/totalStat";
+import { FaSortUp, FaSortDown, FaSort } from "react-icons/fa"; // Import sorting icons for visual cues
+import totalStat from "@/lib/totalStat"; // Utility function to calculate total stats of a Pokémon
 import { useMemo, useState } from "react";
 import Pagination from "./Pagination";
 
@@ -30,42 +30,7 @@ export default function DisplayPokemon({
     direction: null,
   });
 
-  const handleIdSort = (): void => {
-    setNameSort(null);
-    setSortState({ column: null, direction: null });
-
-    let idSortedPokemons: Pokemon[] = [];
-
-    if (idSort) {
-      setIdSort((prev) => !prev);
-      idSortedPokemons = pokemons.sort((a, b) => (a["id"] < b["id"] ? -1 : 1));
-    } else {
-      setIdSort((prev) => !prev);
-      idSortedPokemons = pokemons.sort((a, b) => (a["id"] > b["id"] ? -1 : 1));
-    }
-    pokemons = idSortedPokemons;
-  };
-
-  const handleNameSort = (): void => {
-    setIdSort(null);
-    setSortState({ column: null, direction: null });
-
-    let nameSortedPokemons: Pokemon[] = [];
-
-    if (!nameSort) {
-      setNameSort((prev) => !prev);
-      nameSortedPokemons = pokemons.sort((a, b) =>
-        a["name"] < b["name"] ? -1 : 1
-      );
-    } else {
-      setNameSort((prev) => !prev);
-      nameSortedPokemons = pokemons.sort((a, b) =>
-        a["name"] > b["name"] ? -1 : 1
-      );
-    }
-    pokemons = nameSortedPokemons;
-  };
-
+  // Unified sort handler that updates the sort state based on column and toggles direction
   const handleSort = (column: string): void => {
     const isAsc = sortState.column === column && sortState.direction === "asc";
     setSortState({
@@ -83,6 +48,7 @@ export default function DisplayPokemon({
     "speed",
   ];
 
+  // Use useMemo to sort Pokémon list based on current sort state
   const sortedPokemons = useMemo(() => {
     if (!sortState.column) return pokemons;
     const column = sortState.column;

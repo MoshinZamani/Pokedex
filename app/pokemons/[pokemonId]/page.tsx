@@ -6,6 +6,7 @@ import totalStat from "@/lib/totalStat";
 import { Suspense } from "react";
 import PokemonDetails from "@/app/components/PokemonDetails";
 import { BarChartSkeleton } from "@/app/components/Skeleton";
+import capitalFirstLetter from "@/lib/capitalFirstLetter";
 
 type Props = {
   params: { pokemonId: number };
@@ -17,11 +18,12 @@ export async function generateMetadata({ params: { pokemonId } }: Props) {
   const pokemon = await pokemonData;
 
   return {
-    title: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
+    title: capitalFirstLetter(pokemon.name),
     description: `Details of ${pokemon.name}`,
   };
 }
 
+// Main component for displaying a Pokémon. It fetches Pokémon data and renders the UI accordingly.
 export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
   //@ts-expect-error
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
@@ -55,6 +57,8 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
   return content;
 }
 
+// Function to generate static paths for Next.js static generation feature.
+// It fetches all Pokémons to create paths for static generation.
 export async function generateStaticParams() {
   //@ts-expect-error
   const pokemonsData: Promise<Pokemon[]> = getAllPokemons();

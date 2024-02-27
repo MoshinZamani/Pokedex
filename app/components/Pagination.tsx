@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Dispatch, SetStateAction } from "react";
 
@@ -31,7 +30,7 @@ export default function Pagination({
   return (
     <li className="flex">
       {pages.map((page) => (
-        <div
+        <button
           onClick={() => createPageURL(page + 1)}
           key={page}
           className={
@@ -41,7 +40,7 @@ export default function Pagination({
           }
         >
           {page + 1}
-        </div>
+        </button>
       ))}
     </li>
   );

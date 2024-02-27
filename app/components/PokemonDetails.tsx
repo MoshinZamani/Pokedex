@@ -1,3 +1,5 @@
+import capitalFirstLetter from "@/lib/capitalFirstLetter";
+
 type Props = {
   pokemon: Pokemon;
 };
@@ -6,7 +8,7 @@ export default function PokemonDetails({ pokemon }: Props) {
   return (
     <>
       <p className="font-extrabold text-blue-600 font-mono border-b border-gray-400 p-3 text-center">
-        {pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}
+        {capitalFirstLetter(pokemon.name)}
       </p>
       <p className="font-semibold text-gray-800 border-b border-gray-400 p-3">
         Id : &nbsp;{pokemon.id}
