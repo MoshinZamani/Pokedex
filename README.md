@@ -19,9 +19,10 @@ This project is an example that was built along with a Youtube Series showing ho
 The easiest way is to watch the video series as it is self-explanatory, but here is a short version.
 
 1. Clone the project
-2. Run ***npm install*** to install the dependencies
-3. Run ***npm run dev*** and happy coding!
-4. In case to see the Staic or SSG pages, simply run ***npm run build***
+2. Run **_npm install_** to install the dependencies
+3. Run **_npx prisma migrate dev --name init_** to create the dev.db
+4. Run **_npm run dev_** and happy coding!
+5. In case to see the Staic or SSG pages, simply run **_npm run build_**
 
 ## How to tweak this project for your own uses
 
