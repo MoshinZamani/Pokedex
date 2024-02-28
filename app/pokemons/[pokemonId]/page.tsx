@@ -1,6 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getAllPokemons, getPokemon } from "@/script/script";
-
+import { IoArrowBack } from "react-icons/io5";
 import BarChart from "@/app/components/BarChart";
 import totalStat from "@/lib/totalStat";
 import { Suspense } from "react";
@@ -30,29 +31,36 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
   const pokemon = await pokemonData;
 
   const content = (
-    <section className="flex items-center mt-4 sm:flex-col sm:w-full md:flex-row md:flex-wrap md:w-4/5">
-      <div className="flex justify-center p-8 w-full ">
-        <Image
-          src={`/sprites/${pokemonId}.svg`}
-          alt={pokemon.name}
-          width="0"
-          height="0"
-          priority
-          className="w-1/2 h-auto"
-        />
-      </div>
-      <div className="flex flex-col w-1/3 m-8">
-        <PokemonDetails pokemon={pokemon} />
-      </div>
-      <div className="w-1/2 ml-10">
-        <Suspense fallback={<BarChartSkeleton />}>
-          <BarChart stats={pokemon.stats} />
-        </Suspense>
-        <p className="font-bold mt-5">
-          Total : &nbsp;{totalStat(pokemon.stats)}
-        </p>
-      </div>
-    </section>
+    <>
+      <section className="mt-8">
+        <Link href="http://localhost:3000/pokemons">
+          <IoArrowBack />
+        </Link>
+      </section>
+      <section className="flex items-center mt-4 sm:flex-col sm:w-full md:flex-row md:flex-wrap md:w-4/5">
+        <div className="flex justify-center p-8 w-full ">
+          <Image
+            src={`/sprites/${pokemonId}.svg`}
+            alt={pokemon.name}
+            width="0"
+            height="0"
+            priority
+            className="w-1/2 h-auto"
+          />
+        </div>
+        <div className="flex flex-col w-1/3 m-8">
+          <PokemonDetails pokemon={pokemon} />
+        </div>
+        <div className="w-1/2 ml-10">
+          <Suspense fallback={<BarChartSkeleton />}>
+            <BarChart stats={pokemon.stats} />
+          </Suspense>
+          <p className="font-bold mt-5">
+            Total : &nbsp;{totalStat(pokemon.stats)}
+          </p>
+        </div>
+      </section>
+    </>
   );
   return content;
 }

@@ -1,6 +1,6 @@
 import DisplayPokemon from "../components/DisplayPokemon";
 import Search from "../components/Search";
-import { getAllPokemons } from "@/script/script";
+import { main } from "@/script/script";
 
 type Props = {
   searchParams?: {
@@ -15,7 +15,7 @@ type Props = {
 export default async function Pokemons({ searchParams }: Props) {
   // Asynchronously fetch the pokemons data
   // @ts-expect-error
-  const pokemonsData: Promise<Pokemon[]> = getAllPokemons();
+  const pokemonsData: Promise<Pokemon[]> = main();
   const pokemons = await pokemonsData;
 
   // Define the number of items per page for pagination

@@ -23,8 +23,6 @@ export default function DisplayPokemon({
   totalPages,
   currentPage,
 }: Props) {
-  const [idSort, setIdSort] = useState<null | boolean>(false);
-  const [nameSort, setNameSort] = useState<null | boolean>(null);
   const [sortState, setSortState] = useState<SortState>({
     column: null,
     direction: null,

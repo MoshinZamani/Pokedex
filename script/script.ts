@@ -2,35 +2,55 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function main(pokemons: Pokemon[]) {
-  const transactions = pokemons.map((pokemon) => {
-    return prisma.pokemon.create({
-      data: {
-        id: Number(pokemon.id),
-        name: pokemon.name,
-        height: pokemon.height,
-        weight: pokemon.weight,
-        abilities: {
-          create: pokemon.abilities,
-        },
-        types: {
-          create: pokemon.types,
-        },
-        stats: {
-          // @ts-expect-error
-          create: pokemon.stats,
-        },
-      },
-    });
-  });
+async function InsertPokemons(pokemons: Pokemon[]) {
   try {
-    const result = await prisma.$transaction(transactions);
-    return result;
+    const transactions = pokemons.map((pokemon) => {
+      return prisma.pokemon.create({
+        data: {
+          id: Number(pokemon.id),
+          name: pokemon.name,
+          height: pokemon.height,
+          weight: pokemon.weight,
+          abilities: {
+            create: pokemon.abilities,
+          },
+          types: {
+            create: pokemon.types,
+          },
+          stats: {
+            // @ts-expect-error
+            create: pokemon.stats,
+          },
+        },
+      });
+    });
+    await prisma.$transaction(transactions);
   } catch (error) {
-    console.error(`Error : ${error}`);
+    console.error(error);
   }
 }
 
+// Inserts all fetched Pokemons into Sqlite DB
+export async function main() {
+  try {
+    // Loads data from db
+    const pokemons = await getAllPokemons();
+
+    // Checks if data exists in db, otherwise will load and insert data
+    if (pokemons?.length === 0) {
+      const pokemonsData = await fetch("http://localhost:3000/api");
+      const pokemons: Pokemon[] = await pokemonsData.json();
+
+      // Loads and inserts pokemons in db
+      await InsertPokemons(pokemons);
+    }
+    return await getAllPokemons();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// Gets all Pokemons from db
 export async function getAllPokemons() {
   try {
     // Fetch all records from the Pokemon table
@@ -48,6 +68,7 @@ export async function getAllPokemons() {
   }
 }
 
+// Gets Pokemon with the given id from db
 export async function getPokemon(pokemonId: number) {
   const pokemon = await prisma.pokemon.findUnique({
     where: {
@@ -63,16 +84,4 @@ export async function getPokemon(pokemonId: number) {
     throw new Error(`Pokemon with ID ${pokemonId} not found.`);
   }
   return pokemon;
-}
-
-export async function deleteAll() {
-  try {
-    // Fetch all records from the Pokemon table
-    await prisma.ability.deleteMany({});
-    await prisma.type.deleteMany({});
-    await prisma.stat.deleteMany({});
-    await prisma.pokemon.deleteMany({});
-  } catch (error) {
-    console.error("Error fetching data from tables:", error);
-  }
 }

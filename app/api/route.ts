@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { main, deleteAll } from "@/script/script";
 
 export async function GET() {
   const promises = [];
@@ -35,10 +34,5 @@ export async function GET() {
     });
   });
 
-  // main(pokemons);
-  // deleteAll();
-
-  return NextResponse.json({
-    message: "All data fetched and inserted into sqlite db using prisma.",
-  });
+  return NextResponse.json(pokemons);
 }
