@@ -14,8 +14,7 @@ type Props = {
 // The functional component to render Pokemons list
 export default async function Pokemons({ searchParams }: Props) {
   // Asynchronously fetch the pokemons data
-  // @ts-expect-error
-  const pokemonsData: Promise<Pokemon[]> = main();
+  const pokemonsData: Promise<Pokemon[] | undefined> = main();
   const pokemons = await pokemonsData;
 
   // Define the number of items per page for pagination
@@ -23,7 +22,7 @@ export default async function Pokemons({ searchParams }: Props) {
 
   // Extract and process query parameter for filtering
   const query = searchParams?.query?.toLowerCase() || "";
-  let filteredPokemons = pokemons.filter((pokemon) =>
+  let filteredPokemons = pokemons!.filter((pokemon) =>
     pokemon.name.startsWith(query)
   );
 

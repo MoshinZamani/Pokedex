@@ -14,7 +14,6 @@ type Props = {
 };
 
 export async function generateMetadata({ params: { pokemonId } }: Props) {
-  //@ts-expect-error
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 
@@ -26,7 +25,6 @@ export async function generateMetadata({ params: { pokemonId } }: Props) {
 
 // Main component for displaying a Pokémon. It fetches Pokémon data and renders the UI accordingly.
 export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
-  //@ts-expect-error
   const pokemonData: Promise<Pokemon> = getPokemon(pokemonId);
   const pokemon = await pokemonData;
 

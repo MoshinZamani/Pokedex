@@ -16,7 +16,7 @@ type Ability = {
 type Type = { name: string };
 
 type Stat = {
-  base_stat: string;
+  base_stat: number;
   stat_name: string;
 };
 

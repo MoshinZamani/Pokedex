@@ -18,6 +18,15 @@ type SortState = {
   direction: "desc" | "asc" | null;
 };
 
+const statsName: string[] = [
+  "hp",
+  "attack",
+  "defense",
+  "special-attack",
+  "special-defense",
+  "speed",
+];
+
 export default function DisplayPokemon({
   pokemons,
   totalPages,
@@ -37,15 +46,6 @@ export default function DisplayPokemon({
     });
   };
 
-  const statsName: string[] = [
-    "hp",
-    "attack",
-    "defense",
-    "special-attack",
-    "special-defense",
-    "speed",
-  ];
-
   // Use useMemo to sort Pokémon list based on current sort state
   const sortedPokemons = useMemo(() => {
     if (!sortState.column) return pokemons;
@@ -61,8 +61,8 @@ export default function DisplayPokemon({
           (stat) => stat.stat_name === sortState.column
         );
         return sortState.direction === "asc"
-          ? Number(a.stats[index].base_stat) - Number(b.stats[index].base_stat)
-          : Number(b.stats[index].base_stat) - Number(a.stats[index].base_stat);
+          ? a.stats[index].base_stat - b.stats[index].base_stat
+          : b.stats[index].base_stat - a.stats[index].base_stat;
       } else {
         return sortState.direction === "asc" ? a.id - b.id : b.id - a.id;
       }

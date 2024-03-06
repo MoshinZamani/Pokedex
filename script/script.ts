@@ -18,7 +18,6 @@ async function InsertPokemons(pokemons: Pokemon[]) {
             create: pokemon.types,
           },
           stats: {
-            // @ts-expect-error
             create: pokemon.stats,
           },
         },
@@ -54,7 +53,6 @@ export async function main() {
 export async function getAllPokemons() {
   try {
     // Fetch all records from the Pokemon table
-    // @ts-expect-error
     const pokemons: Pokemon[] = await prisma.pokemon.findMany({
       include: {
         abilities: true, // Include related abilities for each Pokemon

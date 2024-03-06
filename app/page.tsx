@@ -22,7 +22,7 @@ export default async function Home() {
         <br />
         <p>
           If this is the first time running this application, first, data will
-          be fetched and inserted into db, thus it's gonna be a bit slow
+          be fetched and inserted into db, thus it&aposs gonna be a bit slow
           depending on your connection quality. Data insertion happens just once
           meaning that if there is data in database, it is loaded from db not
           the api.

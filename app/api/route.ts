@@ -20,7 +20,7 @@ export async function GET() {
     });
 
     const stats = result.stats.map((stat: OriginalStat) => {
-      return { base_stat: stat.base_stat, stat_name: stat.stat.name };
+      return { base_stat: Number(stat.base_stat), stat_name: stat.stat.name };
     });
 
     pokemons.push({
