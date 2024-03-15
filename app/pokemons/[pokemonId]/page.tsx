@@ -4,9 +4,7 @@ import { getAllPokemons, getPokemon } from "@/script/script";
 import { IoArrowBack } from "react-icons/io5";
 import BarChart from "@/app/components/BarChart";
 import totalStat from "@/lib/totalStat";
-import { Suspense } from "react";
 import PokemonDetails from "@/app/components/PokemonDetails";
-import { BarChartSkeleton } from "@/app/components/Skeleton";
 import capitalFirstLetter from "@/lib/capitalFirstLetter";
 
 type Props = {
@@ -50,9 +48,8 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
           <PokemonDetails pokemon={pokemon} />
         </div>
         <div className="w-1/2 ml-10">
-          <Suspense fallback={<BarChartSkeleton />}>
-            <BarChart stats={pokemon.stats} />
-          </Suspense>
+          <BarChart stats={pokemon.stats} />
+
           <p className="font-bold mt-5">
             Total : &nbsp;{totalStat(pokemon.stats)}
           </p>
