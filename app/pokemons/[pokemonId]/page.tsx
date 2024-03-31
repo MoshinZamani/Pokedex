@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getAllPokemons, getPokemon } from "@/script/script";
+import { getAllPokemons, getPokemon } from "@/script/main";
 import { IoArrowBack } from "react-icons/io5";
 import BarChart from "@/app/components/BarChart";
 import totalStat from "@/lib/totalStat";

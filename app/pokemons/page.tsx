@@ -1,6 +1,6 @@
 import DisplayPokemon from "../components/DisplayPokemon";
 import Search from "../components/Search";
-import { main } from "@/script/script";
+import { main } from "@/script/main";
 
 type Props = {
   searchParams?: {
