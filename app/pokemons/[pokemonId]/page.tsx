@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getAllPokemons, getPokemon } from "@/script/main";
 import { IoArrowBack } from "react-icons/io5";
 import BarChart from "@/app/components/BarChart";
 import totalStat from "@/lib/totalStat";
 import PokemonDetails from "@/app/components/PokemonDetails";
 import capitalFirstLetter from "@/lib/capitalFirstLetter";
+import { getPokemon } from "@/script/getPokemon";
+import { getAllPokemons } from "@/script/getAllPokemons";
 
 type Props = {
   params: { pokemonId: number };
@@ -63,7 +64,6 @@ export default async function DisplayPokemon({ params: { pokemonId } }: Props) {
 // Function to generate static paths for Next.js static generation feature.
 // It fetches all Pokémons to create paths for static generation.
 export async function generateStaticParams() {
-  //@ts-expect-error
   const pokemonsData: Promise<Pokemon[]> = getAllPokemons();
   const pokemons = await pokemonsData;
 

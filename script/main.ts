@@ -18,5 +18,6 @@ export async function main() {
     return await getAllPokemons();
   } catch (error) {
     console.error(error);
+    return [];
   }
 }

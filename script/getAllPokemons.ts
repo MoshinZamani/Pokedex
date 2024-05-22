@@ -16,5 +16,6 @@ export async function getAllPokemons() {
     return pokemons;
   } catch (error) {
     console.error("Error fetching data from tables:", error);
+    return [];
   }
 }

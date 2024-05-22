@@ -1,6 +1,6 @@
 import React from "react";
 import { FaSort } from "react-icons/fa";
-import Search from "../components/Search";
+import Search from "./Search";
 
 const SkeletonRow = () => (
   <tr className="animate-pulse">
@@ -29,7 +29,7 @@ const SkeletonRow = () => (
   </tr>
 );
 
-const Loading = ({ rows = 10 }) => {
+const SkeletonDisplay = ({ rows = 10 }) => {
   return (
     <div className="flex flex-col w-full items-center">
       <Search />
@@ -109,4 +109,4 @@ const Loading = ({ rows = 10 }) => {
   );
 };
 
-export default Loading;
+export default SkeletonDisplay;
